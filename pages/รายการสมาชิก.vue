@@ -35,13 +35,16 @@
       :search="search"
       class="elevation-1"
     >
+      <template v-slot:item.status="{ item }">
+        <v-switch
+          v-model="item.status"
+          inset
+          :label="!item.status ? 'Off' : 'On'"
+        ></v-switch>
+      </template>
     </v-data-table>
   </v-container>
 </template>
-
-
-
-
 
 <script>
 export default {
@@ -54,15 +57,14 @@ export default {
           text: "No",
           align: "start",
           sortable: false,
-          value: "no",
+          value: "no"
         },
         { text: "ID", value: "id" },
         { text: "Name", value: "name" },
         { text: "Surname", value: "surname" },
         { text: "Major", value: "major" },
         { text: "E-mail", value: "email" },
-        { text: "Status", value: "status" },
-        
+        { text: "Status", value: "status" }
       ],
       desserts: [
         {
@@ -73,8 +75,7 @@ export default {
           surname: "Chan",
           major: "CE",
           email: "6231501001@lamduan.mfu.ac.th",
-          status: "",
-         
+          status: false
         },
         {
           no: "2",
@@ -84,7 +85,7 @@ export default {
           surname: "K",
           major: "SE",
           email: "6231501013@lamduan.mfu.ac.th",
-          status: "",
+          status: false
         },
         {
           no: "3",
@@ -94,11 +95,11 @@ export default {
           surname: "C",
           major: "MTA",
           email: "6231501037@lamduan.mfu.ac.th",
-          status: "",
-        },
-      ],
+          status: false
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 
