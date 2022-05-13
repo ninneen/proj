@@ -1,147 +1,110 @@
 <template>
   <v-container>
-    <v-div>
-      <h2>ประวัติการยืมคืนทั้งหมด</h2>
-    </v-div>
-    <br />
-    <!--<v-container fluid>
-      <v-row align="center">
-        <h4>ปีการศึกษา</h4>
-        <v-col class="d-flex" cols="8" sm="3"
-          ><v-select :items="items" label="select" dense outlined></v-select>
-        </v-col>
-      </v-row>
-    </v-container>-->
+    <v-row>
+      <v-col
+        cols="3"
+        lg="3"
+      >
+        <v-menu
+          ref="menu1"
+          v-model="menu1"
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+          max-width="290px"
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="dateFormatted"
+              label="Start Date"
+             
+              persistent-hint
+              prepend-icon="mdi-calendar"
+              v-bind="attrs"
+              @blur="date = parseDate(dateFormatted)"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="date"
+            no-title
+            @input="menu1 = false"
+          ></v-date-picker>
+        </v-menu>
+        
+      </v-col>
 
-    <v-card-title>
-      <!--List -->
-      <v-spacer></v-spacer>
-      <div class="text-right">
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </div>
-    </v-card-title>
-    
-
- 
-    <v-data-table
-      v-model="selected"
-      :headers="headers"
-      :items="desserts"
-      :items-per-page="5"
-      :search="search"
-      class="elevation-1"
-    >
-    </v-data-table>
+      <v-col
+        cols="3"
+        lg="3"
+      >
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+          max-width="290px"
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="computedDateFormatted"
+              label="End Date"
+              
+              persistent-hint
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="date"
+            no-title
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+       
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
-
 <script>
-export default {
-  data() {
-    return {
-      switch1: true,
-      switch2: false,
-      headers: [
-        {
-          text: "No",
-          align: "start",
-          sortable: false,
-          value: "no",
-        },
-        { text: "ID", value: "id" },
-        { text: "Name", value: "name" },
-        { text: "Surname", value: "surname" },
-        { text: "Major", value: "major" },
-        { text: "E-mail", value: "email" },
-        { text: "Status",value: 'data-table-switch' },
+  export default {
+    data: vm => ({
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      dateFormatted: vm.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
+      menu1: false,
+      menu2: false,
+    }),
 
-        
-      ],
-      desserts: [
-        {
-          no: "1",
-          id: 6231501001,
-          image: "",
-          name: "Kan",
-          surname: "Chan",
-          major: "CE",
-          email: "6231501001@lamduan.mfu.ac.th",
-          
-         
-        },
-        {
-          no: "2",
-          id: 6231501013,
-          image: "",
-          name: "Nut",
-          surname: "K",
-          major: "SE",
-          email: "6231501013@lamduan.mfu.ac.th",
-          
-        },
-        {
-          no: "3",
-          id: 6231501037,
-          image: "",
-          name: "Poon",
-          surname: "C",
-          major: "MTA",
-          email: "6231501037@lamduan.mfu.ac.th",
-          
-        },
-      ],
-    };
-  },
-  
-};
+    computed: {
+      computedDateFormatted () {
+        return this.formatDate(this.date)
+      },
+    },
 
+    watch: {
+      date (val) {
+        this.dateFormatted = this.formatDate(this.date)
+      },
+    },
 
+    methods: {
+      formatDate (date) {
+        if (!date) return null
 
+        const [year, month, day] = date.split('-')
+        return `${month}/${day}/${year}`
+      },
+      parseDate (date) {
+        if (!date) return null
+
+        const [month, day, year] = date.split('/')
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+      },
+    },
+  }
 </script>
-
-
-<style>
-.custom-loader {
-  animation: loader 1s infinite;
-  display: flex;
-}
-@-moz-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-o-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>

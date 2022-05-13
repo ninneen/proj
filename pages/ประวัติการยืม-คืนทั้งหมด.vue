@@ -4,14 +4,6 @@
       <h2>ประวัติการยืม-คืนทั้งหมด</h2>
     </v-div>
     <br />
-   <!-- <v-container fluid>
-      <v-row align="center">
-        <h4>ปีการศึกษา</h4>
-        <v-col class="d-flex" cols="8" sm="3"
-          ><v-select :items="items" label="select" dense outlined></v-select>
-        </v-col>
-      </v-row>
-    </v-container> -->
 
     <v-card-title>
       <!--List -->
@@ -35,6 +27,11 @@
       :search="search"
       class="elevation-1"
     >
+      <template v-slot:item.detail="{ item }">
+        <v-div class="my-2">
+          <v-btn small color="primary" dark> Detail </v-btn>
+        </v-div></template>
+      
     </v-data-table>
   </v-container>
 </template>
@@ -62,7 +59,6 @@ export default {
         { text: "Major", value: "major" },
         { text: "E-mail", value: "email" },
         { text: "Detail", value: "detail" },
-        
       ],
       desserts: [
         {
@@ -74,7 +70,6 @@ export default {
           major: "CE",
           email: "6231501001@lamduan.mfu.ac.th",
           detail: "",
-         
         },
         {
           no: "2",

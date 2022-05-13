@@ -7,9 +7,7 @@
     <v-container fluid>
       <v-row align="center">
         <h4>ปีการศึกษา</h4>
-        <v-col class="d-flex" cols="8" sm="3"
-          ><v-select :items="items" label="select" dense outlined></v-select>
-        </v-col>
+       
       </v-row>
     </v-container>
 
@@ -36,11 +34,11 @@
       class="elevation-1"
     >
       <template v-slot:item.status="{ item }">
-        <v-switch
-          v-model="item.status"
-          inset
-          :label="!item.status ? 'Off' : 'On'"
-        ></v-switch>
+        <v-switch v-model="resolve" inset dense color="red darken-3">
+          <template #prepend>
+            <p class="small"></p>
+          </template>
+        </v-switch>
       </template>
     </v-data-table>
   </v-container>
@@ -57,14 +55,14 @@ export default {
           text: "No",
           align: "start",
           sortable: false,
-          value: "no"
+          value: "no",
         },
         { text: "ID", value: "id" },
         { text: "Name", value: "name" },
         { text: "Surname", value: "surname" },
         { text: "Major", value: "major" },
         { text: "E-mail", value: "email" },
-        { text: "Status", value: "status" }
+        { text: "Status", value: "status" },
       ],
       desserts: [
         {
@@ -75,7 +73,7 @@ export default {
           surname: "Chan",
           major: "CE",
           email: "6231501001@lamduan.mfu.ac.th",
-          status: false
+          status: false,
         },
         {
           no: "2",
@@ -85,7 +83,7 @@ export default {
           surname: "K",
           major: "SE",
           email: "6231501013@lamduan.mfu.ac.th",
-          status: false
+          status: false,
         },
         {
           no: "3",
@@ -95,15 +93,28 @@ export default {
           surname: "C",
           major: "MTA",
           email: "6231501037@lamduan.mfu.ac.th",
-          status: false
-        }
-      ]
+          status: false,
+        },
+      ],
     };
-  }
+  },
 };
 </script>
 
 <style>
+v-input.v-input--switch--inset .v-input--switch__track:after {
+  content: "On";
+  color: #000000;
+  font-size: 13px;
+}
+
+.v-input.v-input--switch--inset.v-input--is-label-active.v-input--is-dirty
+  .v-input--switch__track:after {
+  content: "Off";
+  color: #ffffff;
+  font-size: 13px;
+}
+
 .custom-loader {
   animation: loader 1s infinite;
   display: flex;
