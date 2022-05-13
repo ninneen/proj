@@ -89,7 +89,7 @@ export default {
         {
           icon: "mdi-equalizer-outline",
           title: "Dashboard",
-          to: "/employees",
+          to: "/Dashboard",
         },
         {
           icon: "mdi-apps",
